@@ -19,7 +19,7 @@ if(isset($_POST['magic'])) {
 <body>
     <header>
         <h1>Invoices<span>list</span></h1>
-        <h2>Your simple, but powerful invoicing system</h2>
+        <h2 id="changeText">Your simple, but powerful invoicing system</h2>
     </header>
     
     <div class="container">
