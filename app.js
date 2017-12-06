@@ -7,9 +7,10 @@ $(document).ready(function(){
     
     $('#invInput').keypress(function(event){
         if(event.which == 13){
-            console.log("Ciao dal tasto Enter");
+            event.preventDefault(); // Otherwise the form will be submitted
+            var usrInput = $('#invInput').val();
+            console.log(usrInput);
+            if(1===1){document.getElementById("magicForm").submit();}
         }
     })
-    
-    
 })
