@@ -1,4 +1,5 @@
 <?php
+include "classes.php";
 if(isset($_POST['magic'])) {
     $magic = $_POST['magic'];
     if ($magic){
@@ -44,11 +45,26 @@ if(isset($_POST['magic'])) {
     
             <ul class="list">
                 <?php 
-                if(isset($data)) {
-                    echo '<li class="task">' . $data[0] . ' - ' . $data[1] . ' <span>X</span></li>';
-                }
+                    $db      = new Database();
+                    $query   = "select * from invoices";
+                    $rows = $db->db_num_rows($query);
+                    $results = $db->db_query($query);
+                    if($rows > 0){
+                        while($row = $results->fetch_object()){
+                            echo '<li class="task">' . $row->client . '<span>-></span><span>' . $row->invoice_amount . '</span> </li>';
+                            if($row->invoice_status === 'paid'){
+                                echo "<script>";
+                                echo "console.log('". $row->client . "');";
+                                echo "$('li.task').toggleClass('done');";
+                                echo "</script>";
+                            }
+                        }
+                    }
+                    
+                    if(isset($data)) {
+                        //inserisci campi nel database
+                    }
                 ?>
-                <li class="task">cacca <span>X</span></li>
             </ul>
         </div>
     </div>
