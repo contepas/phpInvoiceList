@@ -1,7 +1,20 @@
 <?php
 if(isset($_POST['magic'])) {
-    echo $magic = $_POST['magic'];
-    
+    $magic = $_POST['magic'];
+    if ($magic){
+        $delimitator = "-";
+        $check = substr_count($magic, $delimitator);
+        if($check > 1){
+            echo "too mutch '-'";
+        } else if($check < 1){
+            echo "there is no '-'";
+            } else {
+                $data  = explode($delimitator , $magic);
+                foreach($data as $value){
+                echo $value;
+            }
+        }
+    }
 }
 ?>
 <html>
@@ -30,6 +43,11 @@ if(isset($_POST['magic'])) {
             </section>
     
             <ul class="list">
+                <?php 
+                if(isset($data)) {
+                    echo '<li class="task">' . $data[0] . ' - ' . $data[1] . ' <span>X</span></li>';
+                }
+                ?>
                 <li class="task">cacca <span>X</span></li>
             </ul>
         </div>
