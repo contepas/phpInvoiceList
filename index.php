@@ -1,21 +1,8 @@
 <?php
 include "classes.php";
+$magic = 'show';
 if(isset($_POST['magic'])) {
     $magic = $_POST['magic'];
-    if ($magic){
-        $delimitator = "-";
-        $check = substr_count($magic, $delimitator);
-        if($check > 1){
-            echo "too mutch '-'";
-        } else if($check < 1){
-            echo "there is no '-'";
-            } else {
-                $data  = explode($delimitator , $magic);
-                foreach($data as $value){
-                echo $value;
-            }
-        }
-    }
 }
 ?>
 <html>
@@ -39,7 +26,7 @@ if(isset($_POST['magic'])) {
         <div class="col-xs-12">
             <section class="form">
                 <form id="magicForm" method="POST" onsubmit="handle">
-                    <input name="magic" type="text" id="invInput" placeholder="Insert your invoice here...">
+                    <input name="magic" type="text" id="invInput" placeholder="Tell me...">
                 </form>
             </section>
     
@@ -47,22 +34,19 @@ if(isset($_POST['magic'])) {
                 <?php 
                     $db      = new Database();
                     $query   = "select * from invoices";
-                    $rows = $db->db_num_rows($query);
+                    $rows    = $db->db_num_rows($query);
                     $results = $db->db_query($query);
                     if($rows > 0){
                         while($row = $results->fetch_object()){
-                            echo '<li class="task">' . $row->client . '<span>-></span><span>' . $row->invoice_amount . '</span> </li>';
                             if($row->invoice_status === 'paid'){
-                                echo "<script>";
-                                echo "console.log('". $row->client . "');";
-                                echo "$('li.task').toggleClass('done');";
-                                echo "</script>";
+                                $classes = 'class="task done"';
+                            } else {
+                                $classes = 'class="task"';
+                            }
+                            if($magic === 'show' || ($magic === 'hide' && $row->invoice_status === 'unpaid')){
+                                echo '<li '. $classes . '>' . $row->client . '<span>-></span><span>' . (int)$row->invoice_amount . ' EUR</span> </li>';
                             }
                         }
-                    }
-                    
-                    if(isset($data)) {
-                        //inserisci campi nel database
                     }
                 ?>
             </ul>

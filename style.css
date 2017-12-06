@@ -82,5 +82,5 @@ li span:nth-child(1) {
 }
 
 li span:nth-child(1):hover {
-	color: #bdc3c7
+	color: #333333;
 }

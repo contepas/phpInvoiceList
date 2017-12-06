@@ -1,8 +1,8 @@
 /*global $*/
 $(document).ready(function(){
-    $.getJSON("", function(){
+    // $.getJSON("", function(){
         
-    })
+    // })
     
     $('#invInput').keypress(function(event){
         if(event.which == 13){
@@ -25,9 +25,6 @@ $(document).ready(function(){
 })
 
 function payInvoice(invoice){
-    //var isDone = !invoice.data('completed');
-    //console.log(isDone);
     invoice.toggleClass('done');
-    //invoice.data('completed', isDone);
-
+    //change invoice_status in the database
 }
