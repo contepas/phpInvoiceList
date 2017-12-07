@@ -1,6 +1,7 @@
 <?php
 
 class Database {
+    private $url;
     private $servername;
     private $username;
     private $password;
@@ -14,13 +15,20 @@ class Database {
     }
     
     private function db_conn(){
-        $this->servername = getenv('IP');
-        $this->username= getenv('C9_USER');
-        $this->password= "";
-        $this->database= "c9";
-        $this->dbport= 3306;
+      
+        // $this->servername = getenv('IP');
+        // $this->username= getenv('C9_USER');
+        // $this->password= "";
+        // $this->database= "c9";
+        // $this->dbport= 3306;
+        
+        $this->servername = "sql11.freemysqlhosting.net";
+        $this->username   = "sql11209524";
+        $this->password   = "ZrIZcJ6XW1";
+        $this->database   = "sql11209524";
+        $this->dbport     = 3306;
         $this->conn = new mysqli(
-            $this->servername, $this->username, $this->password, $this->database, $this->dbport
+            $this->servername, $this->username, $this->password, $this->database//, $this->dbport
         );
         return $this->conn;
     }
@@ -36,21 +44,5 @@ class Database {
     }
 
 }
-
-// if($db->connect_error) {
-//     die("Connection failed: " . $db->connect_error);
-// }
-// $resultConn = "Connected successfuly (" . $db->host_info. ")";
-
-// if($num_rows > 0){
-//     $to_encode  = array();
-//     //output data of each row
-//     while($row = $result->fetch_row()){
-//         $tempVal = $row['client'] . " " . $row['invoice_amount'];
-//         array_push($to_encode, $tempArray);
-//     }
-// }
-
-//echo json_encode($results); 
 
 ?>

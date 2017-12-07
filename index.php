@@ -1,8 +1,10 @@
 <?php
 include "classes.php";
-$magic = 'show';
 if(isset($_POST['magic'])) {
     $magic = $_POST['magic'];
+    
+} else {
+    $magic = 'show';
 }
 ?>
 <html>
@@ -31,12 +33,15 @@ if(isset($_POST['magic'])) {
             </section>
     
             <ul class="list">
-                <?php 
+                <?php
+                    //===============================================================
+                    //=== LISTEN TO THE MAGIC =======================================
+                    //===============================================================
                     $db      = new Database();
                     $query   = "select * from invoices";
                     $rows    = $db->db_num_rows($query);
                     $results = $db->db_query($query);
-                    if($rows > 0){
+                    if($rows > 0 && $magic !== 'transactions'){//=== SHOW AND HIDE PAID INVOICE
                         while($row = $results->fetch_object()){
                             if($row->invoice_status === 'paid'){
                                 $classes = 'class="task done"';
@@ -47,6 +52,16 @@ if(isset($_POST['magic'])) {
                                 echo '<li '. $classes . '>' . $row->client . '<span>-></span><span>' . (int)$row->invoice_amount . ' EUR</span> </li>';
                             }
                         }
+                    }else if($rows > 0 && $magic === 'transactions') {//===EXPORT CSV TRANSACTIONS
+                        header('Content-Type: text/csv; charset=utf-8');
+                        header('Content-Disposition: attachment; filename=transactions.csv');
+                        $output = fopen('php://output', 'w');
+                        fputcsv($output, array('Invoice ID', 'Company Name', 'Invoice Amount'));
+                        // loop over the rows, outputting them
+                        while ($row = $results->fetch_object()){
+                            fputcsv($output, [$row->id, $row->client, $row->invoice_amount], ',', '"');
+                        }
+                        fclose($output);
                     }
                 ?>
             </ul>
