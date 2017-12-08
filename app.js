@@ -12,7 +12,8 @@ $(document).ready(function(){
                 "Your simple, but powerful invoicing system",
                 "Write 'hide' and press enter to hide paid invoices",
                 "Write 'show' and press enter to show paid invoices",
-                "Write 'transactions' to extract csv file"
+                "Write 'transactions' to extract csv file",
+                "Click on any invoice, to change the payment state"
             ]
             setInterval(function(){
                 index++;
