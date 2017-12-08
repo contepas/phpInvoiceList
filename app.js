@@ -11,7 +11,8 @@ $(document).ready(function(){
                 "Write 'hide' and press enter to hide paid invoices",
                 "Write 'show' and press enter to show paid invoices",
                 "Write 'transactions' to extract csv file",
-                "Click on any invoice, to change the payment state"
+                "Click on any invoice, to change the payment state",
+                "Click on -> to download the customer report"
             ]
             setInterval(function(){
                 index++;
@@ -47,7 +48,6 @@ $(document).ready(function(){
     $('.list').on('click', 'span', function(e){
         e.stopPropagation();
         customerReport($(this));
-        
     })
 })
 

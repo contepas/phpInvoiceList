@@ -24,5 +24,5 @@ there are two magic clicks:
 click on the invoice, to change the payment statment
 ```
 ```
-(coming soon) click on the -> to download the CSV with the customer report
+click on the -> to download the CSV with the customer report
 ```
