@@ -75,7 +75,7 @@ function customerReport(client){
         method: "POST",
         success: function(result){
             console.log(result);
-            window.location = 'csvClient.php';
+            window.location = '\\csvClient.php';
         }
     })
 }
