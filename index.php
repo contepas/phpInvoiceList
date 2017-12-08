@@ -6,7 +6,10 @@ $rows    = $db->db_num_rows($query);
 $results = $db->db_query($query);
 if(isset($_POST['magic'])) {
     $magic = $_POST['magic'];
-    if($rows > 0 && $magic === 'transactions') {//===EXPORT CSV TRANSACTIONS
+    //===============================================================
+    //=== GET CSV TRANSACTIONS ======================================
+    //===============================================================
+    if($rows > 0 && $magic === 'transactions') {
         ob_end_clean();
         header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename=transactions.csv');
@@ -51,9 +54,9 @@ if(isset($_POST['magic'])) {
             <ul class="list">
                 <?php
                     //===============================================================
-                    //=== LISTEN TO THE MAGIC =======================================
+                    //=== SHOW/HIDE PAID INVOICES ===================================
                     //===============================================================
-                    if($rows > 0 && $magic !== 'transactions'){//=== SHOW AND HIDE PAID INVOICE
+                    if($rows > 0 && $magic !== 'transactions'){
                         while($row = $results->fetch_object()){
                             if($row->invoice_status === 'paid'){
                                 $classes = 'class="task done"';
@@ -61,7 +64,7 @@ if(isset($_POST['magic'])) {
                                 $classes = 'class="task"';
                             }
                             if($magic === 'show' || ($magic === 'hide' && $row->invoice_status === 'unpaid')){
-                                echo '<li '. $classes . '>' . $row->client . '<span>-></span><span>' . (int)$row->invoice_amount . ' EUR</span> </li>';
+                                echo '<li '. $classes . 'id="' . $row->id . '">' . $row->client . '<span>-></span><span>' . (int)$row->invoice_amount . ' EUR</span> </li>';
                             }
                         }
                     }

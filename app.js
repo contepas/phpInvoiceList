@@ -29,8 +29,9 @@ $(document).ready(function(){
         if(event.which == 13){
             event.preventDefault(); // Otherwise the form will be submitted
             var usrInput = $('#invInput').val();
-            console.log(usrInput);
-            if(usrInput === 'show' || usrInput === 'hide' || usrInput === 'transactions'){document.getElementById("magicForm").submit();}
+            if(usrInput === 'show' || usrInput === 'hide' || usrInput === 'transactions'){
+                document.getElementById("magicForm").submit();
+            }
         }
     })
     
@@ -38,7 +39,6 @@ $(document).ready(function(){
     //=== PAY INVOICE ===============================================
     //===============================================================
     $('.list').on('click', 'li', function(){
-        console.log($(this));
         payInvoice($(this));
     })
     
@@ -53,6 +53,16 @@ $(document).ready(function(){
 })
 
 function payInvoice(invoice){
-    invoice.toggleClass('done');
     //change invoice_status in the database
+    $.ajax({
+        url: "updatePayment.php",
+        data: { label: invoice[0].id, req: 'toggle' },
+        method: "POST",
+        success: function(result){
+            console.log(result);
+        }
+    })
+    .then(function() {
+        invoice.toggleClass('done');
+    });
 }
