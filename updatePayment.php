@@ -19,7 +19,6 @@
         if ($resUp) {
             echo "Record updated successfully";
         }
-        exit;
     }
 
 ?>
