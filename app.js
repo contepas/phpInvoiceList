@@ -1,7 +1,5 @@
 /*global $*/
 $(document).ready(function(){
-    // $.getJSON("", function(){
-    // })
     
     //===============================================================
     //=== SHOW SENTENCE TO HELP USING THE APP =======================
@@ -48,7 +46,7 @@ $(document).ready(function(){
     //===============================================================
     $('.list').on('click', 'span', function(e){
         e.stopPropagation();
-        //esport CSV
+        customerReport($(this));
         
     })
 })
@@ -57,7 +55,7 @@ function payInvoice(invoice){
     //change invoice_status in the database
     $.ajax({
         url: "updatePayment.php",
-        data: { label: invoice[0].id, req: 'toggle' },
+        data: { label: invoice[0].id },
         method: "POST",
         success: function(result){
             console.log(result);
@@ -66,4 +64,18 @@ function payInvoice(invoice){
     .then(function() {
         invoice.toggleClass('done');
     });
+}
+
+function customerReport(client){
+    var id = $(client).closest("li").attr("id");
+    console.log(id);
+    $.ajax({
+        url: "customerReport.php",
+        data: { label: id },
+        method: "POST",
+        success: function(result){
+            console.log(result);
+            window.location = 'csvClient.php';
+        }
+    })
 }
