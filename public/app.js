@@ -68,7 +68,6 @@ function payInvoice(invoice){
 
 function customerReport(client){
     var id = $(client).closest("li").attr("id");
-    console.log(id);
     $.ajax({
         url: "customerReport.php",
         data: { label: id },

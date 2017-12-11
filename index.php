@@ -1,36 +1,38 @@
 <?php
-include "classes.php";
-$db      = new Database();
-$query   = "select * from invoices";
-$rows    = $db->db_num_rows($query);
-$results = $db->db_query($query);
-if(isset($_POST['magic'])) {
-    $magic = $_POST['magic'];
-    //===============================================================
-    //=== GET CSV TRANSACTIONS ======================================
-    //===============================================================
-    if($rows > 0 && $magic === 'transactions') {
-        ob_end_clean();
-        header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename=transactions.csv');
-        $output = fopen('php://output', 'w');
-        fputcsv($output, array('Invoice ID', 'Company Name', 'Invoice Amount'));
-        // loop over the rows, outputting them
-        while ($row = $results->fetch_object()){
-            fputcsv($output, [$row->id, $row->client, $row->invoice_amount], ',', '"');
+
+    include "Database.php";
+    $db      = new Database();
+    $query   = "select * from invoices";
+    $rows    = $db->db_num_rows($query);
+    $results = $db->db_query($query);
+    if(isset($_POST['magic'])) {
+        $magic = $_POST['magic'];
+        //===============================================================
+        //=== GET CSV TRANSACTIONS ======================================
+        //===============================================================
+        if($rows > 0 && $magic === 'transactions') {
+            ob_end_clean();
+            header('Content-Type: text/csv; charset=utf-8');
+            header('Content-Disposition: attachment; filename=transactions.csv');
+            $output = fopen('php://output', 'w');
+            fputcsv($output, array('Invoice ID', 'Company Name', 'Invoice Amount'));
+            // loop over the rows, outputting them
+            while ($row = $results->fetch_object()){
+                fputcsv($output, [$row->id, $row->client, $row->invoice_amount], ',', '"');
+            }
+            fclose($output);
+            exit();
         }
-        fclose($output);
-        exit();
+    } else {
+        $magic = 'show';
     }
-} else {
-    $magic = 'show';
-}
+    
 ?>
 <html>
 <head>
     <title>Invoice list</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="stylesheet" href="public/style.css" type="text/css" />
     <script
         src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -73,6 +75,6 @@ if(isset($_POST['magic'])) {
         </div>
     </div>
     
-    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="public/app.js"></script>
 </body>
 </html>

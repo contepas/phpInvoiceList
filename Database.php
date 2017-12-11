@@ -16,12 +16,6 @@ class Database {
     
     private function db_conn(){
         
-        // $this->servername = getenv('IP');
-        // $this->username   = getenv('C9_USER');
-        // $this->password   = "";
-        // $this->database   = "c9";
-        // $this->dbport     = 3306;
-        
         $this->servername = "sql11.freemysqlhosting.net";
         $this->username   = "sql11209524";
         $this->password   = "ZrIZcJ6XW1";
@@ -43,12 +37,6 @@ class Database {
         return $result;
     }
 
-}
-
-class Magic {
-    public function prova() {
-        
-    }
 }
 
 ?>
